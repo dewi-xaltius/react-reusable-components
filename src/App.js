@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([
+    { name: 'Task 1' },
+    { name: 'Task 2' },
+    { name: 'Task 3' },
+  ]);
+
+  const handleEdit = (index) => {
+    console.log(`Editing task ${index}`);
+  };
+
+  const handleDelete = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
+  const handleAdd = (task) => {
+    setTasks([...tasks, { name: task }]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Task List</h1>
+      {tasks.map((task, index) => (
+        <div key={index} className="task">
+          <span>Task Name: {task.name}</span>
+          <button onClick={() => handleEdit(index)}>Edit</button>
+          <button onClick={() => handleDelete(index)}>Delete</button>
+        </div>
+      ))}
+      <div className="new-task">
+        <h2>Add New Task</h2>
+        <input type="text" placeholder="Task Name" id="newTaskInput" />
+        <button onClick={() => handleAdd(document.getElementById('newTaskInput').value)}>
+          Add
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
