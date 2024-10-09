@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import TaskItem from './components/TaskItem';
+import Form from './components/Form';
 
 const App = () => {
   const [tasks, setTasks] = useState([
@@ -8,7 +10,7 @@ const App = () => {
   ]);
 
   const handleEdit = (index) => {
-    console.log(`Editing task ${index}`);
+    console.log('Editing task #' + index);
   };
 
   const handleDelete = (index) => {
@@ -23,19 +25,14 @@ const App = () => {
     <div>
       <h1>Task List</h1>
       {tasks.map((task, index) => (
-        <div key={index} className="task">
-          <span>Task Name: {task.name}</span>
-          <button onClick={() => handleEdit(index)}>Edit</button>
-          <button onClick={() => handleDelete(index)}>Delete</button>
-        </div>
+        <TaskItem
+          key={index}
+          task={task}
+          onEdit={() => handleEdit(index)}
+          onDelete={() => handleDelete(index)}
+        />
       ))}
-      <div className="new-task">
-        <h2>Add New Task</h2>
-        <input type="text" placeholder="Task Name" id="newTaskInput" />
-        <button onClick={() => handleAdd(document.getElementById('newTaskInput').value)}>
-          Add
-        </button>
-      </div>
+      <Form onAdd={handleAdd} />
     </div>
   );
 };
